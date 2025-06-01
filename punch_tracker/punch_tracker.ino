@@ -6,7 +6,7 @@
 #include <Wire.h>
 #include "I2Cdev.h"
 #include "MPU6050.h"
-#include <MadgwickAHRS.h>
+#include <MadgwickAHRS.h> // Move this lib into here. I had to make modifications
 #include <NimBLEDevice.h>
 
 #define SERVICE_UUID   "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
