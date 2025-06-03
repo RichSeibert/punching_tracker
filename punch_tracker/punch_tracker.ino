@@ -23,12 +23,12 @@ const float DT_S     = 1.0f / FS_HZ;   // sample period (s)
 const float G2MS2    = 9.80665f;       // 1 g → m/s²
 
 /*  MPU6050 calibration biases  */
-const float ACC_BIAS_X =  0.029126f;
-const float ACC_BIAS_Y = -0.042134f;
-const float ACC_BIAS_Z = -0.152346f;
-const float GYR_BIAS_X = -3.573862f;
-const float GYR_BIAS_Y =  0.405528f;
-const float GYR_BIAS_Z =  1.292642f;
+const float ACC_BIAS_X  = 0.053218f;
+const float ACC_BIAS_Y  = 0.029173f;
+const float ACC_BIAS_Z  = -0.041077f;
+const float GYRO_BIAS_X = -1.645935f;
+const float GYRO_BIAS_Y = 0.675488f;
+const float GYRO_BIAS_Z = -0.596911f;
 
 /*  punch detection thresholds (all in m/s²)  */
 const float POS_PRE_THR  =  10.0f;   // small +Y “load” threshold (~+1 g)
@@ -102,9 +102,9 @@ void loop() {
   float aYg = ay / 2048.0f - ACC_BIAS_Y;  // forward component
   float aZg = az / 2048.0f - ACC_BIAS_Z;
 
-  float gXd = gx / 16.4f - GYR_BIAS_X;
-  float gYd = gy / 16.4f - GYR_BIAS_Y;
-  float gZd = gz / 16.4f - GYR_BIAS_Z;
+  float gXd = gx / 16.4f - GYRO_BIAS_X;
+  float gYd = gy / 16.4f - GYRO_BIAS_Y;
+  float gZd = gz / 16.4f - GYRO_BIAS_Z;
 
   // Madgwick update (gyro = deg/s, accel = g)
   filter.updateIMU(gXd, gYd, gZd, aXg, aYg, aZg);
@@ -127,6 +127,7 @@ void loop() {
       waitingNeg = true;
       searchCnt  = 0;
       minLinY    = linY;
+      driveLinY = linY;
     }
   }
   else if (waitingNeg) {
@@ -148,7 +149,7 @@ void loop() {
 
         char msg[200];
         int len = snprintf(
-        msg, sizeof(msg),
+            msg, sizeof(msg),
             "%.1f,%.1f,%.1f,%.3f,%.3f,%.3f,%.3f,"
             "%.1f,%.1f,%.1f,%.3f,%.3f,%.3f,%.3f",
             driveLinX, driveLinY, driveLinZ,
