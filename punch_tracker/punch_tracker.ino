@@ -31,8 +31,8 @@ const float GYRO_BIAS_Y = 0.675488f;
 const float GYRO_BIAS_Z = -0.596911f;
 
 /*  punch detection thresholds (all in m/s²)  */
-const float POS_PRE_THR  =  10.0f;   // small +Y “load” threshold (~+1 g)
-const float NEG_IMPACT    = -20.0f;  // large –Y “impact” threshold (~–2 g)
+const float POS_PRE_THR  =  20.0f;   // small +Y “load” threshold (~+1 g)
+const float NEG_IMPACT    = -2.0f;  // large –Y “impact” threshold (~–2 g)
 const int   SEARCH_N      = 100;     // look up to 100 samples (200 ms) for the negative spike
 const int   COOLOFF_N     = 100;     // after a punch, ignore next 100 samples (~200 ms)
 
